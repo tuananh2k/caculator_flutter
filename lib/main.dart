@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:caculator_flutter/Math.dart';
+import 'package:flutter/material.dart';
 
 void main() => runApp(new MyApp());
 
-class MyApp extends StatelessWidget {//state không thể thay đổi state
+class MyApp extends StatelessWidget {
+  //state không thể thay đổi state
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,31 +14,31 @@ class MyApp extends StatelessWidget {//state không thể thay đổi state
   }
 }
 
-class Calculator extends StatefulWidget {//state có thể thay đổi state
+class Calculator extends StatefulWidget {
+  //state có thể thay đổi state
   CalculatorState createState() => CalculatorState();
 }
 
 class CalculatorState extends State<Calculator> {
-  dynamic text = '0';
+  Math math = new Math();
+
   Widget btn(btnText, Color color) {
     return Container(
       padding: EdgeInsets.only(bottom: 10.0), //thụt lề dưới 10 pixel
-      child: RaisedButton(//loại button bấm nổi
-        child: Text(
-          btnText, //chọn đối tượng text chịu ảnh hưởng
-          style: TextStyle(fontSize: 30),
-        ),
-        onPressed: () { // giống actionListener trong javaswing
-         print(btnText);
-         text =  Math.consolve(text, btnText);
-         print(text);
-         setState(() {
-           this.text = text;
-         });
-        },
-        color: color,
-        padding: EdgeInsets.all(20.0),// căn lề all 22 pixel
-        shape: CircleBorder()
+      child: RaisedButton( //loại button bấm nổi
+          child: Text(
+            btnText, //chọn đối tượng text chịu ảnh hưởng
+            style: TextStyle(fontSize: 30),
+          ),
+          onPressed: () { // giống actionListener trong javaswing
+            setState(() {
+              math.callBack(btnText); //gọi hàm xử lí khi có action
+            });
+          },
+          color: color,
+          padding: EdgeInsets.all(20.0),
+          // căn lề all 22 pixel
+          shape: CircleBorder()
       ),
     );
   }
@@ -46,14 +47,19 @@ class CalculatorState extends State<Calculator> {
     return Container(
       padding: EdgeInsets.only(bottom: 10.0),
       child: RaisedButton(
-          child: Text(
-            btnText,
-            style: TextStyle(fontSize: 30),
-          ),
-          onPressed: () {},
-          color: color,
-          padding: EdgeInsets.only(left: 83, top: 21, right: 83, bottom: 21), //xét kích thước cho button
-          shape: StadiumBorder(),
+        child: Text(
+          btnText,
+          style: TextStyle(fontSize: 30),
+        ),
+        onPressed: () {
+          setState(() {
+            math.callBack(btnText);
+          });
+        },
+        color: color,
+        padding: EdgeInsets.only(left: 83, top: 21, right: 83, bottom: 21),
+        //xét kích thước cho button
+        shape: StadiumBorder(),
       ),
     );
   }
@@ -69,10 +75,21 @@ class CalculatorState extends State<Calculator> {
           mainAxisAlignment: MainAxisAlignment.end, // bàn phím ở hàng cuối cùng
           children: <Widget>[
             Container(
-              child: Text(text,
-                  style: TextStyle(fontSize: 60, color: Colors.white)),
+              child: Text(math.getHistory(),
+                  style: TextStyle(fontSize: 50, color: Colors.white60),
+                  maxLines: 1),
               alignment: Alignment.bottomRight,
-              padding: EdgeInsets.only(bottom: 20,right: 20)
+              padding: EdgeInsets.only(bottom: 20, right: 20),
+            ),
+            Container(
+              child: Text(math.getExperssion(),
+                style: TextStyle(fontSize: 80,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+                maxLines: 1,
+              ),
+              alignment: Alignment.bottomRight,
+              padding: EdgeInsets.only(bottom: 20, right: 20),
             ),
             new Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 //chia đều khoảng cách giữa có button
@@ -80,7 +97,7 @@ class CalculatorState extends State<Calculator> {
                   btn('C', Colors.white70),
                   btn('+/-', Colors.white70),
                   btn('%', Colors.white70),
-                  btn(':', Colors.orange)
+                  btn('/', Colors.orange)
                 ]),
             new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -88,7 +105,7 @@ class CalculatorState extends State<Calculator> {
                   btn('7', Colors.white),
                   btn('8', Colors.white),
                   btn('9', Colors.white),
-                  btn('x', Colors.orange)
+                  btn('*', Colors.orange)
                 ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               btn('4', Colors.white),
@@ -112,4 +129,5 @@ class CalculatorState extends State<Calculator> {
       ),
     );
   }
+
 }
