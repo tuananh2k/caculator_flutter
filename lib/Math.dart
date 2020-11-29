@@ -4,6 +4,7 @@ class Math {
   String _his = '';
   String _exp = '';
   bool haveResult = false;
+  bool point = false;
 
   String cutNumber0(String result) { //loại bỏ số 0 nếu có .0
     if (result.toString().contains('.')) {// kiem tra xem co dau '.' ko?
@@ -29,6 +30,7 @@ class Math {
       _his = _exp;
       _exp = exp.evaluate(EvaluationType.REAL, cm).toString();
       haveResult = true;
+      point = false;
     } else if(btn == "+/-"){ //neu an vao nut '+/-'
         if(_exp.toString().startsWith('-')){
           _exp = _exp.toString().substring(1); //bo ki tu dau tien
@@ -37,17 +39,21 @@ class Math {
     } else if(btn == '%'){
       double tmp = double.parse(_exp);
       _exp = (tmp/100).toString();
+    } else if(btn == '.'){ //tạm thời chỉ cho nhập 1 dấu '.' trong biểu thức
+      if(point==false){ //kiểm tra xem có dấu . chưa?
+        _exp += btn;
+      }
+      point = true;
     }
     else {// cac truong hop con lai (số + dấu)
-      if(haveResult){
-        if(btn=='0'||btn=='1'||btn=='2'||btn=='3'||btn=='4'||btn=='5'||btn=='6'||btn=='7'||btn=='8'||btn=='9'){
+      if(haveResult&&(btn=='0'||btn=='1'||btn=='2'||btn=='3'||btn=='4'||btn=='5'||btn=='6'||btn=='7'||btn=='8'||btn=='9')){
           _exp = '';
           _his = '';
-        }
       }
       haveResult = false;
       _exp += btn;
     }
+
     _exp = cutNumber0(_exp); //gọi hàm bỏ số 0 nếu thừa
   }
 
