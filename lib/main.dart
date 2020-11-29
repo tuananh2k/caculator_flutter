@@ -82,7 +82,7 @@ class CalculatorState extends State<Calculator> {
               padding: EdgeInsets.only(bottom: 20, right: 20),
             ),
             Container(
-              child: Text(math.getExperssion(),
+              child: Text(math.getExpression(),
                 style: TextStyle(fontSize: 80,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
@@ -97,7 +97,7 @@ class CalculatorState extends State<Calculator> {
                   btn('C', Colors.white70),
                   btn('+/-', Colors.white70),
                   btn('%', Colors.white70),
-                  btn('/', Colors.orange)
+                  btn(':', Colors.orange)
                 ]),
             new Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -105,7 +105,7 @@ class CalculatorState extends State<Calculator> {
                   btn('7', Colors.white),
                   btn('8', Colors.white),
                   btn('9', Colors.white),
-                  btn('*', Colors.orange)
+                  btn('x', Colors.orange)
                 ]),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               btn('4', Colors.white),
